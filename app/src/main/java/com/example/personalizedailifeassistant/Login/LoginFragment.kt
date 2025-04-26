@@ -36,7 +36,7 @@ class LoginFragment: Fragment() {
                 Toast.makeText(requireContext(), "Login clicked with email: $email", Toast.LENGTH_SHORT).show()
                 // Add your login logic here
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, DashboardFrag())
+                    .replace(R.id.fragment_container, DashboardFragment())
                     .addToBackStack(null) // allows back navigation
                     .commit()
             }
