@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
 import android.view.LayoutInflater
 
-class TaskAdapter(private val tasks: List<String>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private val tasks: MutableList<String>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    // ViewHolder to hold the UI elements
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val taskTextView: TextView = itemView.findViewById(R.id.tvTask)
     }
@@ -20,11 +19,14 @@ class TaskAdapter(private val tasks: List<String>) : RecyclerView.Adapter<TaskAd
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val task = tasks[position]
-        holder.taskTextView.text = task
+        holder.taskTextView.text = tasks[position]
     }
 
-    override fun getItemCount(): Int {
-        return tasks.size
+    override fun getItemCount(): Int = tasks.size
+
+    fun updateTasks(newTasks: List<String>) {
+        tasks.clear()
+        tasks.addAll(newTasks)
+        notifyDataSetChanged()
     }
 }
