@@ -1,14 +1,17 @@
 package com.example.personalizedailifeassistant.PersonalizedDashboard.Summaries
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SummariesViewModel : ViewModel() {
-    private val _summaries = MutableLiveData<List<SummaryModel>>(emptyList())
-    val summaries: LiveData<List<SummaryModel>> = _summaries
+class SummaryViewModel : ViewModel() {
 
-    fun addSummary(summary: SummaryModel) {
-        _summaries.value = _summaries.value?.plus(summary)
+    private val _summaries = MutableLiveData<MutableList<Summary>>(mutableListOf())
+    val summaries: LiveData<MutableList<Summary>> = _summaries
+
+    fun addSummary(content: String) {
+        _summaries.value?.add(Summary(content))
+        _summaries.value = _summaries.value // Trigger LiveData to update RecyclerView
     }
 }

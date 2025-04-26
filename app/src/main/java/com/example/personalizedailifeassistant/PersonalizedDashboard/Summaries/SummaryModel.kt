@@ -1,5 +1,3 @@
 package com.example.personalizedailifeassistant.PersonalizedDashboard.Summaries
 
-data class SummaryModel(
-    val summaryText: String
-)
+data class Summary(val content: String)

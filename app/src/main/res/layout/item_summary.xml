@@ -4,14 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="12dp"
-    android:layout_marginBottom="8dp">
+    android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/tvSummaryText"
+        android:id="@+id/tvSummaryItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Summary Info"
+        android:text="Summary"
         android:textSize="16sp"
-        android:textColor="@android:color/black"
-        android:padding="8dp"/>
+        android:textColor="@android:color/black" />
 </LinearLayout>

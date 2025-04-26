@@ -1,42 +1,45 @@
+package com.example.personalizedailifeassistant.PersonalizedDashboard.Summaries
+
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.personalizedailifeassistant.PersonalizedDashboard.Summaries.SummariesAdapter
-import com.example.personalizedailifeassistant.PersonalizedDashboard.Summaries.SummariesViewModel
-import com.example.personalizedailifeassistant.PersonalizedDashboard.Summaries.SummaryModel
 import com.example.personalizedailifeassistant.R
 
 class SummariesFragment : Fragment() {
 
-    private lateinit var summariesAdapter: SummariesAdapter
-    private val summariesViewModel: SummariesViewModel by viewModels()
+    private lateinit var viewModel: SummaryViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: SummaryAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_summaries, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this).get(SummaryViewModel::class.java)
+        recyclerView = view.findViewById(R.id.recyclerViewSummaries)
         val btnAddSummary = view.findViewById<Button>(R.id.btnAddSummary)
-        val recyclerViewSummaries = view.findViewById<RecyclerView>(R.id.recyclerViewSummaries)
 
-        summariesAdapter = SummariesAdapter(emptyList())
-        recyclerViewSummaries.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewSummaries.adapter = summariesAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        summariesViewModel.summaries.observe(viewLifecycleOwner) { summaries ->
-            summariesAdapter.updateList(summaries)
+        viewModel.summaries.observe(viewLifecycleOwner) { summaries ->
+            adapter = SummaryAdapter(summaries)
+            recyclerView.adapter = adapter
         }
 
         btnAddSummary.setOnClickListener {
-            summariesViewModel.addSummary(
-                SummaryModel("You completed 5 tasks and improved mood today!")
-            )
+            val newSummary = "New summary at ${System.currentTimeMillis()}"
+            viewModel.addSummary(newSummary)
         }
     }
 }
+
+
