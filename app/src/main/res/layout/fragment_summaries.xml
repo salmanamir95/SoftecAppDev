@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- EditText to enter the note -->
+    <EditText
+        android:id="@+id/editTextNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your notes"
+        android:inputType="textMultiLine"
+        android:minHeight="200dp"
+        android:padding="16dp"/>
+
+    <!-- Button to generate summary -->
     <Button
         android:id="@+id/btnAddSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Summary"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginTop="12dp"/>
 
+    <!-- RecyclerView to show generated summaries -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSummaries"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/>
 </LinearLayout>
