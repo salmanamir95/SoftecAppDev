@@ -55,8 +55,8 @@ dependencies {
     // Fragment KTX
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
-    // Calendar View
-    implementation ("com.kizitonwose.calendar:compose:2.3.0")
+    // Material Calendar View
+    implementation("com.prolificinteractive:material-calendarview:1.4.3")
 
     // Testing
     testImplementation(libs.junit)

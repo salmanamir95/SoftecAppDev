@@ -2,5 +2,6 @@ package com.example.personalizedailifeassistant.PersonalizedDashboard.DailyPlann
 
 data class DailyPlannerTask(
     val title: String,
-    val time: String
+    val time: String,
+    val date: String // Add a date field to link tasks to specific dates
 )

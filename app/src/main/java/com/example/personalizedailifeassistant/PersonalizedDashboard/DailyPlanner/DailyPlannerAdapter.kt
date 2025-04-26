@@ -1,10 +1,12 @@
 package com.example.personalizedailifeassistant.PersonalizedDashboard.DailyPlanner
+
 import android.view.*
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
 
-class DailyPlannerAdapter(private val dailyPlans: List<DailyPlannerTask>) :
+class DailyPlannerAdapter(private var dailyPlans: List<DailyPlannerTask>) :
     RecyclerView.Adapter<DailyPlannerAdapter.DailyPlannerViewHolder>() {
 
     class DailyPlannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,4 +27,12 @@ class DailyPlannerAdapter(private val dailyPlans: List<DailyPlannerTask>) :
     }
 
     override fun getItemCount(): Int = dailyPlans.size
+
+    // Method to update the tasks in the adapter
+    fun updateTasks(newTasks: List<DailyPlannerTask>) {
+        val diffCallback = TaskDiffCallback(dailyPlans, newTasks)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        dailyPlans = newTasks
+        diffResult.dispatchUpdatesTo(this) // Apply the changes
+    }
 }
