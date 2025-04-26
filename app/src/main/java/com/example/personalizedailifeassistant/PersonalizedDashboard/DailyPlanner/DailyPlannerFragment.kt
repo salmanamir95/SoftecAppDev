@@ -5,9 +5,9 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
@@ -15,7 +15,7 @@ import com.example.personalizedailifeassistant.R
 class DailyPlannerFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var dailyPlannerAdapter: DailyPlannerAdapter
-    private val dailyPlanList = mutableListOf<DailyPlannerTask>() // <-- notice type change
+    private lateinit var viewModel: DailyPlannerViewModel // ViewModel instance
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,20 +27,33 @@ class DailyPlannerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize ViewModel
+        viewModel = ViewModelProvider(requireActivity()).get(DailyPlannerViewModel::class.java)
+
+        // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.recyclerViewDailyPlans)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        dailyPlannerAdapter = DailyPlannerAdapter(dailyPlanList)
+
+        // Initialize Adapter with empty list (will be updated by ViewModel)
+        dailyPlannerAdapter = DailyPlannerAdapter(emptyList())
         recyclerView.adapter = dailyPlannerAdapter
 
+        // Observe LiveData from ViewModel
+        viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
+            // When the task list changes, update the adapter
+            dailyPlannerAdapter = DailyPlannerAdapter(tasks)
+            recyclerView.adapter = dailyPlannerAdapter
+        }
+
+        // Button to add new task
         val btnAddPlan = view.findViewById<Button>(R.id.btnAddPlan)
         btnAddPlan.setOnClickListener {
             showAddPlanDialog()
         }
 
-        // Add dummy tasks
-        dailyPlanList.add(DailyPlannerTask("Math Class", "10:00 AM"))
-        dailyPlanList.add(DailyPlannerTask("Group Study", "2:00 PM"))
-        dailyPlannerAdapter.notifyDataSetChanged()
+        // Add initial dummy tasks via ViewModel (this can be done via ViewModel if necessary)
+        // viewModel.addTask(DailyPlannerTask("Math Class", "10:00 AM"))
+        // viewModel.addTask(DailyPlannerTask("Group Study", "2:00 PM"))
     }
 
     private fun showAddPlanDialog() {
@@ -64,8 +77,8 @@ class DailyPlannerFragment : Fragment() {
             val title = titleInput.text.toString()
             val time = timeInput.text.toString()
             if (title.isNotEmpty() && time.isNotEmpty()) {
-                dailyPlanList.add(DailyPlannerTask(title, time))
-                dailyPlannerAdapter.notifyItemInserted(dailyPlanList.size - 1)
+                // Add task via ViewModel
+                viewModel.addTask(DailyPlannerTask(title, time))
             }
             dialog.dismiss()
         }

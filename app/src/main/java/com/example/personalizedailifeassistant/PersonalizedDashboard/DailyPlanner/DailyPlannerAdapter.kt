@@ -8,8 +8,8 @@ class DailyPlannerAdapter(private val dailyPlans: List<DailyPlannerTask>) :
     RecyclerView.Adapter<DailyPlannerAdapter.DailyPlannerViewHolder>() {
 
     class DailyPlannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val titleTextView: TextView = itemView.findViewById(R.id.tvTaskTitle)
-        val timeTextView: TextView = itemView.findViewById(R.id.tvTaskTime)
+        val taskTitle: TextView = itemView.findViewById(R.id.tvTaskTitle)
+        val taskTime: TextView = itemView.findViewById(R.id.tvTaskTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyPlannerViewHolder {
@@ -20,8 +20,8 @@ class DailyPlannerAdapter(private val dailyPlans: List<DailyPlannerTask>) :
 
     override fun onBindViewHolder(holder: DailyPlannerViewHolder, position: Int) {
         val task = dailyPlans[position]
-        holder.titleTextView.text = task.title
-        holder.timeTextView.text = task.time
+        holder.taskTitle.text = task.title
+        holder.taskTime.text = task.time
     }
 
     override fun getItemCount(): Int = dailyPlans.size
