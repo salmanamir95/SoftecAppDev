@@ -11,7 +11,7 @@ import com.example.personalizedailifeassistant.R
 class RemindersFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var reminderAdapter: ReminderAdapter
-    private val reminderList = mutableListOf<String>()
+    private val reminderList = mutableListOf<Reminder>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,7 +31,7 @@ class RemindersFragment : Fragment() {
 
         btnAddReminder.setOnClickListener {
             // Add new reminder (for now, just a static reminder)
-            val newReminder = "New Reminder at ${System.currentTimeMillis()}"
+            val newReminder = Reminder("New Reminder at ${System.currentTimeMillis()}")
             reminderList.add(newReminder)
             reminderAdapter.notifyItemInserted(reminderList.size - 1)
         }

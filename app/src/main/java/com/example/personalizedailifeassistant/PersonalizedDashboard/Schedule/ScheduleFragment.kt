@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
 
 class ScheduleFragment : Fragment() {
 
-    private lateinit var scheduleAdapter: ScheduleAdapter
-    private val scheduleViewModel: ScheduleViewModel by viewModels()
+    private lateinit var viewModel: ScheduleViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ScheduleAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
@@ -24,27 +24,20 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java)
+        recyclerView = view.findViewById(R.id.recyclerViewSchedule)
         val btnAddSchedule = view.findViewById<Button>(R.id.btnAddSchedule)
-        val recyclerViewSchedule = view.findViewById<RecyclerView>(R.id.recyclerViewSchedule)
 
-        // Setup RecyclerView
-        scheduleAdapter = ScheduleAdapter(emptyList())
-        recyclerViewSchedule.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewSchedule.adapter = scheduleAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Observe LiveData
-        scheduleViewModel.schedules.observe(viewLifecycleOwner) { schedules ->
-            scheduleAdapter.updateList(schedules)
+        viewModel.schedules.observe(viewLifecycleOwner) { schedules ->
+            adapter = ScheduleAdapter(schedules)
+            recyclerView.adapter = adapter
         }
 
-        // Add dummy schedule on button click
         btnAddSchedule.setOnClickListener {
-            scheduleViewModel.addSchedule(
-                ScheduleModel(
-                    title = "New Meeting",
-                    time = "5:00 PM"
-                )
-            )
+            val newSchedule = "New Schedule at ${System.currentTimeMillis()}"
+            viewModel.addSchedule(newSchedule)
         }
     }
 }

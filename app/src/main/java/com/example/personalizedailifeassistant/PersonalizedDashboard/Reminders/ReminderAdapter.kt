@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
 
-class ReminderAdapter(private val reminders: List<String>) : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>() {
+class ReminderAdapter(private val reminders: List<Reminder>) : RecyclerView.Adapter<ReminderAdapter.ReminderViewHolder>() {
 
-    class ReminderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val reminderText: TextView = itemView.findViewById(R.id.tvReminder)
+    class ReminderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvReminder: TextView = view.findViewById(R.id.tvReminderItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
@@ -19,7 +19,7 @@ class ReminderAdapter(private val reminders: List<String>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
-        holder.reminderText.text = reminders[position]
+        holder.tvReminder.text = reminders[position].title
     }
 
     override fun getItemCount(): Int = reminders.size

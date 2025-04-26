@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ScheduleViewModel : ViewModel() {
-    private val _schedules = MutableLiveData<List<ScheduleModel>>(emptyList())
-    val schedules: LiveData<List<ScheduleModel>> = _schedules
 
-    fun addSchedule(schedule: ScheduleModel) {
-        val updatedList = _schedules.value.orEmpty().toMutableList()
-        updatedList.add(schedule)
-        _schedules.value = updatedList
+    private val _schedules = MutableLiveData<MutableList<Schedule>>(mutableListOf())
+    val schedules: LiveData<MutableList<Schedule>> = _schedules
+
+    fun addSchedule(title: String) {
+        _schedules.value?.add(Schedule(title))
+        _schedules.value = _schedules.value // trigger LiveData update
     }
 }
