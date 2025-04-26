@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.compose.material3.Button
 import androidx.fragment.app.Fragment
 import com.example.personalizedailifeassistant.R
+import com.example.personalizedailifeassistant.Register.RegisterFragment
 
 class LoginFragment: Fragment() {
 
@@ -24,7 +24,7 @@ class LoginFragment: Fragment() {
         val emailEditText = view.findViewById<EditText>(R.id.etEmail)
         val passwordEditText = view.findViewById<EditText>(R.id.etPassword)
         val loginButton = view.findViewById<Button>(R.id.btnLogin)
-
+        val registerButton = view.findViewById<Button>(R.id.btnRegister)
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
@@ -35,6 +35,13 @@ class LoginFragment: Fragment() {
                 Toast.makeText(requireContext(), "Login clicked with email: $email", Toast.LENGTH_SHORT).show()
                 // Add your login logic here
             }
+        }
+        registerButton.setOnClickListener {
+            // Replace with RegisterFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, RegisterFragment())
+                .addToBackStack(null) // allows back navigation
+                .commit()
         }
     }
 }
