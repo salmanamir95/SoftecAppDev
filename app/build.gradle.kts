@@ -26,6 +26,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -36,26 +37,29 @@ android {
 }
 
 dependencies {
+    // AndroidX core libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.material3.android)
+    implementation(libs.material) // Material Components (managed via libs.versions.toml)
 
-    // Add RecyclerView dependency
-    implementation("androidx.recyclerview:recyclerview:1.2.1") // Add this line
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 
+    // Lifecycle components
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
+    // Fragment KTX
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+
+    // Calendar View
+    implementation ("com.kizitonwose.calendar:compose:2.3.0")
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // ADD THESE NEW DEPENDENCIES
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
-
-    implementation ("com.kizitonwose.calendarview:calendarview:1.0.0")
-    implementation ("com.google.android.material:material:1.6.0")  // For Bottom Sheet
 }

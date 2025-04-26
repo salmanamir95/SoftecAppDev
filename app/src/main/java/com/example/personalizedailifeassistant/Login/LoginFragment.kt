@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.personalizedailifeassistant.PersonalizedDashboard.DashboardFrag
+import com.example.personalizedailifeassistant.PersonalizedDashboard.DashboardFragment
 import com.example.personalizedailifeassistant.R
 import com.example.personalizedailifeassistant.Register.RegisterFragment
 
