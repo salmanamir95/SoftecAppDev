@@ -11,7 +11,7 @@ import com.example.personalizedailifeassistant.R
 
 class MoodFragment : Fragment() {
 
-    private val moodViewModel: MoodViewModel by viewModels() // ViewModel for mood
+    private val moodViewModel: MoodViewModel by viewModels()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var moodHistoryAdapter: MoodHistoryAdapter
@@ -26,6 +26,7 @@ class MoodFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // UI references
         val tvMood = view.findViewById<TextView>(R.id.tvMood)
         val btnAddMood = view.findViewById<Button>(R.id.btnAddMood)
         val btnHappy = view.findViewById<Button>(R.id.btnHappy)
@@ -33,32 +34,39 @@ class MoodFragment : Fragment() {
         val btnStressed = view.findViewById<Button>(R.id.btnStressed)
         val btnRelaxed = view.findViewById<Button>(R.id.btnRelaxed)
 
-        // Set up RecyclerView
+        // RecyclerView setup
         recyclerView = view.findViewById(R.id.recyclerViewMoodHistory)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         moodHistoryAdapter = MoodHistoryAdapter(mutableListOf())
         recyclerView.adapter = moodHistoryAdapter
 
-        // Observe the LiveData for current mood
+        // Observing LiveData from ViewModel
         moodViewModel.currentMood.observe(viewLifecycleOwner) { mood ->
-            tvMood.text = "Current Mood: $mood" // Update the UI with current mood
+            tvMood.text = "Current Mood: $mood"
         }
 
-        // Observe the LiveData for mood history
         moodViewModel.moodHistory.observe(viewLifecycleOwner) { history ->
-            moodHistoryAdapter.updateMoodHistory(history) // Update the RecyclerView with mood history
+            moodHistoryAdapter.updateMoodHistory(history)
         }
 
-        // Set button listeners to update the mood
-        btnHappy.setOnClickListener { moodViewModel.updateMood("Happy") }
-        btnSad.setOnClickListener { moodViewModel.updateMood("Sad") }
-        btnStressed.setOnClickListener { moodViewModel.updateMood("Stressed") }
-        btnRelaxed.setOnClickListener { moodViewModel.updateMood("Relaxed") }
+        // Mood button listeners
+        val moodButtons = mapOf(
+            btnHappy to "Happy",
+            btnSad to "Sad",
+            btnStressed to "Stressed",
+            btnRelaxed to "Relaxed"
+        )
 
-        // Button to add mood (can also be used for manual mood update)
+        for ((button, mood) in moodButtons) {
+            button.setOnClickListener {
+                moodViewModel.updateMood(mood)
+            }
+        }
+
+        // Add mood manually based on current display
         btnAddMood.setOnClickListener {
-            val newMood = tvMood.text.toString().removePrefix("Current Mood: ")
-            moodViewModel.updateMood(newMood) // Update the mood in ViewModel
+            val current = tvMood.text.toString().removePrefix("Current Mood: ").trim()
+            moodViewModel.updateMood(current)
         }
     }
 }

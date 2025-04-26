@@ -5,19 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MoodViewModel : ViewModel() {
-    // LiveData for the current mood
-    private val _currentMood = MutableLiveData<String>("Feeling good")
+
+    private val _currentMood = MutableLiveData<String>("None")
     val currentMood: LiveData<String> get() = _currentMood
 
-    // LiveData for the mood history
-    private val _moodHistory = MutableLiveData<MutableList<String>>(mutableListOf())
-    val moodHistory: LiveData<MutableList<String>> get() = _moodHistory
+    private val _moodHistory = MutableLiveData<List<MoodLog>>(emptyList())
+    val moodHistory: LiveData<List<MoodLog>> get() = _moodHistory
 
-    // Function to update the current mood
-    fun updateMood(newMood: String) {
-        _currentMood.value = newMood
-        // Add the new mood to the history
-        _moodHistory.value?.add(newMood)
-        _moodHistory.value = _moodHistory.value // Trigger LiveData update
+    fun updateMood(mood: String) {
+        _currentMood.value = mood
+        val updatedList = _moodHistory.value.orEmpty().toMutableList()
+        updatedList.add(0, MoodLog(mood, System.currentTimeMillis().toString()))
+        _moodHistory.value = updatedList
     }
 }
