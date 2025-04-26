@@ -1,42 +1,35 @@
 package com.example.personalizedailifeassistant.PersonalizedDashboard
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import com.example.personalizedailifeassistant.PersonalizedDashboard.Mood.MoodFragment
-import com.example.personalizedailifeassistant.PersonalizedDashboard.Reminders.RemindersFragment
-import com.example.personalizedailifeassistant.PersonalizedDashboard.Schedule.ScheduleFragment
-import com.example.personalizedailifeassistant.PersonalizedDashboard.Summaries.SummariesFragment
-import com.example.personalizedailifeassistant.PersonalizedDashboard.Tasks.TasksFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.personalizedailifeassistant.PersonalizedDashboard.DailyPlanner.DailyPlannerAdapter
 import com.example.personalizedailifeassistant.R
 
-class DashboardFrag: Fragment() {
+class DailyPlannerFragment : Fragment() {
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var dailyPlannerAdapter: DailyPlannerAdapter
+    private val dailyPlanList = mutableListOf<String>()
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+        return inflater.inflate(R.layout.fragment_daily_planner, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Add the individual section fragments dynamically to the dashboard
-        loadFragment(TasksFragment(), R.id.containerTasks)
-        loadFragment(ScheduleFragment(), R.id.containerSchedule)
-        loadFragment(MoodFragment(), R.id.containerMood)
-        loadFragment(RemindersFragment(), R.id.containerReminders)
-        loadFragment(SummariesFragment(), R.id.containerSummaries)
-    }
+        recyclerView = view.findViewById(R.id.recyclerViewDailyPlans)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        dailyPlannerAdapter = DailyPlannerAdapter(dailyPlanList)
+        recyclerView.adapter = dailyPlannerAdapter
 
-    private fun loadFragment(fragment: Fragment, containerId: Int) {
-        val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
-        transaction.replace(containerId, fragment)
-        transaction.addToBackStack(null) // Allows back navigation
-        transaction.commit()
+        // Temporary Static Example
+        dailyPlanList.add("Math Class at 10 AM")
+        dailyPlanList.add("Group Study at 2 PM")
+        dailyPlannerAdapter.notifyDataSetChanged()
     }
 }

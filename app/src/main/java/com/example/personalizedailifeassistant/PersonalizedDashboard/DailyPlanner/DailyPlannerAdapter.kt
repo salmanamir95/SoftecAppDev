@@ -4,30 +4,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
 
-class DailyPlannerAdapter : RecyclerView.Adapter<DailyPlannerAdapter.TaskViewHolder>() {
+class DailyPlannerAdapter(private val dailyPlans: List<DailyPlannerTask>) :
+    RecyclerView.Adapter<DailyPlannerAdapter.DailyPlannerViewHolder>() {
 
-    private var tasks: List<DailyPlannerTask> = listOf()
-
-    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.tvTaskTitle)
-        val time: TextView = itemView.findViewById(R.id.tvTaskTime)
+    class DailyPlannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val titleTextView: TextView = itemView.findViewById(R.id.tvTaskTitle)
+        val timeTextView: TextView = itemView.findViewById(R.id.tvTaskTime)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_daily_planner_task, parent, false)
-        return TaskViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyPlannerViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_daily_plan, parent, false)
+        return DailyPlannerViewHolder(view)
     }
 
-    override fun getItemCount(): Int = tasks.size
-
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val task = tasks[position]
-        holder.title.text = task.title
-        holder.time.text = task.time
+    override fun onBindViewHolder(holder: DailyPlannerViewHolder, position: Int) {
+        val task = dailyPlans[position]
+        holder.titleTextView.text = task.title
+        holder.timeTextView.text = task.time
     }
 
-    fun updateTasks(newTasks: List<DailyPlannerTask>) {
-        tasks = newTasks
-        notifyDataSetChanged()
-    }
+    override fun getItemCount(): Int = dailyPlans.size
 }
