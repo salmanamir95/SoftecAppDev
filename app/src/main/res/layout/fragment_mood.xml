@@ -4,17 +4,60 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Display Current Mood -->
     <TextView
         android:id="@+id/tvMood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Current mood"
-        android:textSize="14sp" />
+        android:text="Current Mood"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="center" />
 
+    <!-- Buttons to select different moods -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnHappy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Happy" />
+
+        <Button
+            android:id="@+id/btnSad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sad" />
+
+        <Button
+            android:id="@+id/btnStressed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stressed" />
+
+        <Button
+            android:id="@+id/btnRelaxed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Relaxed" />
+    </LinearLayout>
+
+    <!-- Button to save the mood -->
     <Button
         android:id="@+id/btnAddMood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Mood"
-        android:layout_marginTop="12dp"/>
+        android:text="Add Mood"
+        android:layout_marginTop="12dp" />
+
+    <RecyclerView
+        android:id="@+id/recyclerViewMoodHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+
 </LinearLayout>
