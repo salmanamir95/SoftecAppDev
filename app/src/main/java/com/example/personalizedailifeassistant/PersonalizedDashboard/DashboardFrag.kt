@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.personalizedailifeassistant.PersonalizedDashboard.Mood.MoodFragment
+import com.example.personalizedailifeassistant.PersonalizedDashboard.Reminders.RemindersFragment
+import com.example.personalizedailifeassistant.PersonalizedDashboard.Schedule.ScheduleFragment
+import com.example.personalizedailifeassistant.PersonalizedDashboard.Summaries.SummariesFragment
 import com.example.personalizedailifeassistant.PersonalizedDashboard.Tasks.TasksFragment
 import com.example.personalizedailifeassistant.R
 
