@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.personalizedailifeassistant.PersonalizedDashboard.DashboardFrag
 import com.example.personalizedailifeassistant.R
 import com.example.personalizedailifeassistant.Register.RegisterFragment
 
@@ -34,6 +35,10 @@ class LoginFragment: Fragment() {
             } else {
                 Toast.makeText(requireContext(), "Login clicked with email: $email", Toast.LENGTH_SHORT).show()
                 // Add your login logic here
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, DashboardFrag())
+                    .addToBackStack(null) // allows back navigation
+                    .commit()
             }
         }
         registerButton.setOnClickListener {

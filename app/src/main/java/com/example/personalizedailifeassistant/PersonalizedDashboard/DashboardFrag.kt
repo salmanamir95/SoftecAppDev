@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.personalizedailifeassistant.PersonalizedDashboard.Tasks.TasksFragment
 import com.example.personalizedailifeassistant.R
 
 class DashboardFrag: Fragment() {
