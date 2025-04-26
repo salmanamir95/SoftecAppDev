@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
 import android.view.LayoutInflater
 
-class TaskAdapter(private val tasks: MutableList<String>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private val tasks: MutableList<Task>) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val taskTextView: TextView = itemView.findViewById(R.id.tvTask)
+        val taskCategoryTextView: TextView = itemView.findViewById(R.id.tvTaskCategory) // Add a TextView for category
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -19,12 +20,15 @@ class TaskAdapter(private val tasks: MutableList<String>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.taskTextView.text = tasks[position]
+        val task = tasks[position]
+        holder.taskTextView.text = task.title
+        holder.taskCategoryTextView.text = task.category // Set category text
     }
 
     override fun getItemCount(): Int = tasks.size
 
-    fun updateTasks(newTasks: List<String>) {
+    // Update the list of tasks
+    fun updateTasks(newTasks: List<Task>) {
         tasks.clear()
         tasks.addAll(newTasks)
         notifyDataSetChanged()
