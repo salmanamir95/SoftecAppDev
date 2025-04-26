@@ -7,13 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
 
-class MoodHistoryAdapter : RecyclerView.Adapter<MoodHistoryAdapter.MoodViewHolder>() {
+class MoodHistoryAdapter(private var moodHistory: MutableList<String>) :
+    RecyclerView.Adapter<MoodHistoryAdapter.MoodViewHolder>() {
 
-    private var moodHistoryList: List<String> = listOf()
-
-    fun submitList(list: List<String>) {
-        moodHistoryList = list
-        notifyDataSetChanged()
+    class MoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvMoodHistory: TextView = itemView.findViewById(R.id.tvMoodHistory)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoodViewHolder {
@@ -22,17 +20,15 @@ class MoodHistoryAdapter : RecyclerView.Adapter<MoodHistoryAdapter.MoodViewHolde
     }
 
     override fun onBindViewHolder(holder: MoodViewHolder, position: Int) {
-        val mood = moodHistoryList[position]
-        holder.bind(mood)
+        holder.tvMoodHistory.text = moodHistory[position] // Bind data to the view
     }
 
-    override fun getItemCount(): Int = moodHistoryList.size
+    override fun getItemCount(): Int = moodHistory.size
 
-    class MoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val moodTextView: TextView = itemView.findViewById(R.id.tvMoodHistory)
-
-        fun bind(mood: String) {
-            moodTextView.text = mood
-        }
+    // Update the RecyclerView data
+    fun updateMoodHistory(newMoodHistory: List<String>) {
+        moodHistory.clear()
+        moodHistory.addAll(newMoodHistory)
+        notifyDataSetChanged()
     }
 }

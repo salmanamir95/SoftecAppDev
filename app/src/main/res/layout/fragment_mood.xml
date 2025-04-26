@@ -54,7 +54,8 @@
         android:text="Add Mood"
         android:layout_marginTop="12dp" />
 
-    <RecyclerView
+    <!-- RecyclerView to display mood history -->
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMoodHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
