@@ -46,7 +46,7 @@ dependencies {
     // Add RecyclerView dependency
     implementation("androidx.recyclerview:recyclerview:1.2.1") // Add this line
 
-    
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

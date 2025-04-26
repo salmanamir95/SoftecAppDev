@@ -7,26 +7,32 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.personalizedailifeassistant.R
 
+class MoodHistoryAdapter : RecyclerView.Adapter<MoodHistoryAdapter.MoodViewHolder>() {
 
-class MoodHistoryAdapter(private val moodList: List<String>) : RecyclerView.Adapter<MoodHistoryAdapter.MoodViewHolder>() {
+    private var moodHistoryList: List<String> = listOf()
 
-    // ViewHolder for mood items
-    class MoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val moodTextView: TextView = itemView.findViewById(R.id.tvMoodHistory)
+    fun submitList(list: List<String>) {
+        moodHistoryList = list
+        notifyDataSetChanged()
     }
 
-    // Create a new ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoodViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_mood_history, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_mood, parent, false)
         return MoodViewHolder(view)
     }
 
-    // Bind the data to the view
     override fun onBindViewHolder(holder: MoodViewHolder, position: Int) {
-        val mood = moodList[position]
-        holder.moodTextView.text = mood
+        val mood = moodHistoryList[position]
+        holder.bind(mood)
     }
 
-    // Return the number of items in the list
-    override fun getItemCount(): Int = moodList.size
+    override fun getItemCount(): Int = moodHistoryList.size
+
+    class MoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val moodTextView: TextView = itemView.findViewById(R.id.tvMoodHistory)
+
+        fun bind(mood: String) {
+            moodTextView.text = mood
+        }
+    }
 }
